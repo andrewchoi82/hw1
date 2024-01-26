@@ -14,10 +14,44 @@ the function below should be the only one in this file.
 
 /* Add a prototype for a helper function here if you need */
 
-void split(Node*& in, Node*& odds, Node*& evens)
-{
-  /* Add code here */
-// WRITE YOUR CODE HERE
+
+void split(Node*& in, Node*& odds, Node*& evens){
+  if(in==nullptr){
+    return;
+  }else{
+    //creating temp node for the odds and evens
+    Node* sortedNode = new Node(in->value,nullptr);
+    Node * temp4next = in -> next;
+    if(in->value % 2 == 0){
+      //deleting the in head which requires it to set it to null before deleting the content
+      Node * temp2delete = in;
+      in = nullptr;
+      delete temp2delete;
+      if(evens==nullptr){
+        //if there's no items in evens
+        evens = sortedNode;
+        split(temp4next, odds , evens);
+      }
+      else{
+        evens -> next = sortedNode;
+        split(temp4next, odds , evens->next);
+      }
+    }
+    else{
+      //deleting the in head which requires it to set it to null before deleting the content
+      Node * temp2delete = in;
+      in = nullptr;
+      delete temp2delete;
+      if(odds==nullptr){
+        //if there's no items in odds
+        odds = sortedNode;
+        split(temp4next, odds , evens);
+      }
+      else{
+        odds->next = sortedNode;
+        split(temp4next, odds->next , evens);
+      }
+    }
+  }
 }
 
-/* If you needed a helper function, write it here */
